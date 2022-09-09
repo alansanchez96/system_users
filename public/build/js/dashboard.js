@@ -1,0 +1,1 @@
+const cardEditar=document.querySelector("#card_editarPerfil");cardEditar.addEventListener("click",()=>{location.assign("/user/profile")});const cardConfig=document.querySelector("#card_configuracion");cardConfig.addEventListener("click",()=>{location.assign("/user/settings")});
