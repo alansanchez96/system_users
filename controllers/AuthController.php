@@ -65,7 +65,8 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario->sincronizar($_POST);
             $alertas = $usuario->validarCuenta();
-
+            $alertas = $usuario->securityPassword();
+            
             if (empty($alertas)) {
                 $resultadoEmail = $usuario->existeEmail();
                 $resultadoDni = $usuario->existeDni();

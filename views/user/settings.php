@@ -20,24 +20,24 @@ $script = '<script src="/build/js/sidebar.js"></script>';
 
         <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
 
+        <div class="text-error"></div>
         <form action="/user/settings" class="formulario-account" method="POST">
 
-
-            <div class="campo campo-account">
+            <div class="campo campo-account" id="campo_email_actual">
                 <label for="email">Nuevo Email</label>
                 <input type="email" id="email" name="email" value="<?php echo $usuario->email; ?>">
             </div>
-            <div class="campo campo-account">
+            <div class="campo campo-account" id="campo_contraseña_actual">
                 <label for="password">Contraseña Actual</label>
-                <input type="password" id="password" name="password_actual">
+                <input type="password" id="password" name="password_actual" autocomplete="off">
             </div>
-            <div class="campo campo-account">
+            <div class="campo campo-account" id="campo_contraseña_nueva">
                 <label for="password">Nueva Contraseña</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" autocomplete="off">
             </div>
-            <div class="campo campo-account">
+            <div class="campo campo-account" id="campo_contraseña_repetida">
                 <label for="password_confirm">Repite Contraseña</label>
-                <input type="password" id="password_confirm" name="password_confirm">
+                <input type="password" id="password_confirm" name="password_confirm" autocomplete="off">
             </div>
 
             <input type="submit" value="Guardar Cambios" class="boton">
@@ -54,3 +54,4 @@ $script = '<script src="/build/js/sidebar.js"></script>';
 
     </div>
 </section>
+<script src="/build/js/settings.js"></script>

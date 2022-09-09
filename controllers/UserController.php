@@ -106,11 +106,12 @@ class UserController
                         if ($resultado) {
                             // Verificar que el campo NUEVA contraseña esté completo
                             $alertas = $auth->validar('password', 'Algunos campos están vacíos');
-
+                            $alertas = $auth->securityPassword();
+                            
                             if (empty($alertas)) {
                                 // Verificar que la NUEVA contraseña no sea igual a la actual
                                 if ($auth->password === $auth->password_actual && $usuario->password) {
-                                    $alertas = Usuario::setAlerta('error', 'La nueva contraseña no debe ser identica la actual');
+                                    $alertas = Usuario::setAlerta('error', 'La nueva contraseña debe ser diferente a la actual');
                                 } else {
                                     // Entonces si es igual, verificar que el campo repetir no esté vacio
                                     $alertas = $auth->validar('password_confirm', 'Algunos campos están vacíos_confirm');
@@ -140,7 +141,13 @@ class UserController
                             $alertas = Usuario::setAlerta('error', 'La contraseña actual no es correcta');
                         }
                     } elseif (empty($auth->password_actual)) {
-                        # El campo password está vacio, no hacer nada...
+                        # El campo password está vacio, verificar que los campos nuevoPass y confirmNuevoPass también lo estén
+                        if(!empty($auth->password)){
+                            $alertas = Usuario::setAlerta('error', 'Falta ingresar la contraseña actual');
+                        } elseif(!empty($auth->password_confirm)){
+                            $alertas = Usuario::setAlerta('error', 'Falta ingresar la contraseña actual');
+                        }
+
                     }
                 } else {
 

@@ -28,7 +28,9 @@ class Usuario extends ActiveRecord
     public $password_actual;
     public $email_nuevo;
 
-    public $regexUrl = '/(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$/';
+    public $regexNames = '/^[a-zA-ZÀ-ÿ\s]{1,40}$/';
+    public $regexDni = '/^\d{1,2}\.?\d{3}\.?\d{3}$/';
+    public $regexWebsite = '/(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$/';
     public $regexFb = '/(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/';
     public $regexLinkedIn = '/(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[A-z0-9_-]+\/?/';
 
@@ -57,12 +59,26 @@ class Usuario extends ActiveRecord
     {
         if (!$this->nombre) {
             self::$alertas['error'][] = 'El campo Nombre está vacío';
+        } elseif ($this->nombre) {
+            if (!preg_match($this->regexNames, $this->nombre)) {
+                self::$alertas['error'][] = 'El nombre contiene caracteres inválidos';
+            }
         }
+
         if (!$this->apellido) {
             self::$alertas['error'][] = 'El campo Apellido está vacío';
+        } elseif ($this->apellido) {
+            if (!preg_match($this->regexNames, $this->apellido)) {
+                self::$alertas['error'][] = 'El apellido contiene caracteres inválidos';
+            }
         }
+
         if (!$this->dni) {
             self::$alertas['error'][] = 'El campo DNI está vacío';
+        } elseif ($this->dni) {
+            if (!preg_match($this->regexDni, $this->dni)) {
+                self::$alertas['error'][] = 'El formato DNI no es válido';
+            }
         }
 
         return self::$alertas;
@@ -76,7 +92,7 @@ class Usuario extends ActiveRecord
             }
         }
         if ($this->website) {
-            if (!preg_match($this->regexUrl, $this->website)) {
+            if (!preg_match($this->regexWebsite, $this->website)) {
                 self::$alertas['error'][] = 'La URL es inválida';
             }
         }
@@ -88,6 +104,11 @@ class Usuario extends ActiveRecord
         if ($this->linkedin) {
             if (!preg_match($this->regexLinkedIn, $this->linkedin)) {
                 self::$alertas['error'][] = 'LinkedIn no válido';
+            }
+        }
+        if ($this->picture) {
+            if ($_FILES['picture']['type'] != 'image/jpeg' and $_FILES['picture']['type'] != 'image/png') {
+                self::$alertas['error'][] = 'Formato de imagen no válido';
             }
         }
 
@@ -109,16 +130,31 @@ class Usuario extends ActiveRecord
         if (!$this->email) {
             self::$alertas['error'][] = 'El correo es obligatorio';
         }
-        if (!$this->telefono) {
-            self::$alertas['error'][] = 'El teléfono es obligatorio';
-        }
         if (!$this->password) {
             self::$alertas['error'][] = 'La contraseña es obligatoria';
         }
+        // Comparacion de contraseña
         if (!$this->password_confirm) {
             self::$alertas['error'][] = 'Falta confirmar la contraseña';
         } elseif ($this->password != $this->password_confirm) {
             self::$alertas['error'][] = 'Las contraseñas no coinciden';
+        }
+
+        return self::$alertas;
+    }
+    public function securityPassword()
+    {
+        // Entre 6 y 16 ; Letra Mayus y Minus ; 1 Caracter numerico
+        if (strlen($this->password) < 6) {
+            self::$alertas['error'][] = "La clave debe tener al menos 6 caracteres";
+        } elseif (strlen($this->password) > 16) {
+            self::$alertas['error'][] = "La clave no puede tener más de 16 caracteres";
+        } elseif (!preg_match('`[a-z]`', $this->password)) {
+            self::$alertas['error'][] = "La clave debe tener al menos una letra minúscula";
+        } elseif (!preg_match('`[A-Z]`', $this->password)) {
+            self::$alertas['error'][] = "La clave debe tener al menos una letra mayúscula";
+        } elseif (!preg_match('`[0-9]`', $this->password)) {
+            self::$alertas['error'][] = "La clave debe tener al menos un caracter numérico";
         }
 
         return self::$alertas;

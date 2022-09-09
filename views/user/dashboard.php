@@ -22,8 +22,6 @@ $script = '<script src="/build/js/sidebar.js"></script>';
             </div>
 
             <h1>¡Bienvenido <span><?php echo $usuario->nombre . ' ' . $usuario->apellido; ?></span>!</h1>
-            <h1>Agregar validaciones en backend y ultimos detalles en front</h1>
-            <h1>Agregar validaciones en settings</h1>
             <h1>Añadir FetchAPI a los formularios</h1>
             <h1>Finalizar home</h1>
 
