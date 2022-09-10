@@ -48,10 +48,11 @@ $script = '<script src="/build/js/sidebar.js"></script>';
             <h4>¿Quieres cerrar tu cuenta?</h4>
             <p class="close-account"><span class="error">Advertencia:</span> Si cierras tu cuenta, perderas acceso permanente a éste sitio web.</p>
     
-            <button class="btn-rojo">Eliminar Cuenta</button>
+            <button class="btn-rojo" id="btn_delete">Eliminar Cuenta</button>
         </form>
 
 
     </div>
 </section>
+<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>
 <script src="/build/js/settings.js"></script>

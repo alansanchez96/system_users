@@ -60,7 +60,7 @@ $script = '<script src="/build/js/sidebar.js"></script>';
                     <input type="text" id="linkedin" placeholder="Ej: linkedin.com/Alansanchez96" value="<?php echo $usuario->linkedin; ?>" name="linkedin">
                 </div>
 
-                <input type="submit" value="Guardar Cambios" class="boton">
+                <input type="submit" value="Guardar Cambios" class="boton" id="submitProfile">
             </form>
         </div>
 
