@@ -41,7 +41,7 @@ $picture = $_SESSION['picture'] ?? false;
 
             <div class="log-header">
 
-                <a href="/user/dashboard"><?php echo $nombre ? $nombre : ''; ?></a>
+                <a href="/user/dashboard"><?php echo $nombre ? $usuario->nombre . ' ' . $usuario->apellido : ''; ?></a>
                 <?php echo $picture
                     ? '<img src="/build/img/imagenes_usuarios/' . $usuario->picture . '" id="profilePicture">'
                     :  '<a href="/login">Login</a>

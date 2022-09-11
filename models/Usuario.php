@@ -8,13 +8,12 @@ class Usuario extends ActiveRecord
 {
 
     protected static $tabla = 'users';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'telefono', 'dni', 'password', 'password_confirm', 'confirmado', 'token', 'picture', 'biografia', 'website', 'facebook', 'linkedin', 'password_actual', 'email_nuevo'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'dni', 'password', 'password_confirm', 'confirmado', 'token', 'picture', 'biografia', 'website', 'facebook', 'linkedin', 'password_actual', 'email_nuevo'];
 
     public $id;
     public $nombre;
     public $apellido;
     public $email;
-    public $telefono;
     public $dni;
     public $password;
     public $password_confirm;
@@ -40,7 +39,6 @@ class Usuario extends ActiveRecord
         $this->nombre = $args['nombre'] ?? '';
         $this->apellido = $args['apellido'] ?? '';
         $this->email = $args['email'] ?? '';
-        $this->telefono = $args['telefono'] ?? '';
         $this->dni = $args['dni'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->password_confirm = $args['password_confirm'] ?? '';
@@ -107,8 +105,11 @@ class Usuario extends ActiveRecord
             }
         }
         if ($this->picture) {
-            if ($_FILES['picture']['type'] != 'image/jpeg' and $_FILES['picture']['type'] != 'image/png') {
-                self::$alertas['error'][] = 'Formato de imagen no válido';
+
+            if (!is_null($_FILES['name'])) {
+                if ($_FILES['picture']['type'] != 'image/jpeg' and $_FILES['picture']['type'] != 'image/png') {
+                    self::$alertas['error'][] = 'Formato de imagen no válido';
+                }
             }
         }
 

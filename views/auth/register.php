@@ -7,6 +7,7 @@
         <?php
         include_once __DIR__ . '/../templates/alertas.php';
         ?>
+        <div class="text-error"></div>
 
     </div>
     <div class="derecha">
@@ -18,12 +19,11 @@
                     <p>Información personal</p>
                     <input type="text" id="nombre" placeholder="Ingresa tu nombre" name="nombre" value="<?php echo $usuario->nombre; ?>">
                     <input type="text" id="apellido" placeholder="Ingresa tu apellido" name="apellido" value="<?php echo $usuario->apellido; ?>">
-                    <input type="text" id="dni" placeholder="Ingresa tu DNI" pattern="[0-9]{8}{1}" name="dni" value="<?php echo $usuario->dni; ?>">
+                    <input type="text" id="dni" placeholder="Ingresa tu DNI" name="dni" value="<?php echo $usuario->dni; ?>">
                 </div>
                 <div class="campo">
                     <p>Credenciales</p>
                     <input type="email" id="email" placeholder="Ingresa tu correo" name="email" value="<?php echo $usuario->email; ?>">
-                    <input type="tel" id="tel" placeholder="Ingresa tu teléfono" name="telefono" value="<?php echo $usuario->telefono; ?>">
                     <input type="password" id="password" placeholder="Ingresa tu contraseña" name="password">
                     <input type="password" id="password_confirm" placeholder="Confirmar contraseña" name="password_confirm">
                 </div>
@@ -41,3 +41,4 @@
     </div>
 
 </section>
+<script src="/build/js/register.js"></script>

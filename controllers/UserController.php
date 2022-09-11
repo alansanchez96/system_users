@@ -14,9 +14,9 @@ class UserController
     {
         if (!isset($_SESSION)) {
             session_start();
-        } /* else{
+        } elseif(!$_SESSION['login']){
             header('location: /');
-        } */
+        }
 
         $id = $_SESSION['id'];
         $usuario = Usuario::find($id);
@@ -31,6 +31,8 @@ class UserController
 
         if (!isset($_SESSION)) {
             session_start();
+        } elseif(!$_SESSION['login']){
+            header('location: /');
         }
 
         $id = $_SESSION['id'];
@@ -81,6 +83,8 @@ class UserController
     {
         if (!isset($_SESSION)) {
             session_start();
+        } elseif(!$_SESSION['login']){
+            header('location: /');
         }
 
         $id = $_SESSION['id'];
@@ -206,14 +210,15 @@ class UserController
             $token = '';
             header('location: /');
         }
+
         $error = true;
 
         $usuario = Usuario::where('token', $token);
 
         if (empty($usuario) || $usuario->token === '') {
-            Usuario::setAlerta('error', 'Token inválido');
+            header('location: /');
         } elseif ($usuario->token !== $usuario->token) {
-            Usuario::setAlerta('error', 'Token Invalido');
+            header('location: /');
         } else {
             $error = false;
 
@@ -232,7 +237,8 @@ class UserController
 
         $router->render('auth/recover/nuevoemail', [
             'alertas' => $alertas,
-            'error' => $error
+            'error' => $error,
+            'usuario' => $usuario
         ]);
     }
 }

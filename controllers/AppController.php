@@ -24,8 +24,6 @@ class AppController
         $router->render('pages/index', [
             'usuario' => $usuario
         ]);
-
-        $router->render('pages/index');
     }
 
     public static function notfound(Router $router)

@@ -19,8 +19,8 @@ $script = '<script src="/build/js/sidebar.js"></script>';
         <h4>Seguridad</h4>
 
         <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
-
         <div class="text-error"></div>
+
         <form action="/user/settings" class="formulario-account" method="POST">
 
             <div class="campo campo-account" id="campo_email_actual">
